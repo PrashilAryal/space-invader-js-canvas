@@ -8,6 +8,30 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="gameOver" id="modalStart">
+      <div class="gameOver__container">
+        <!-- <h3>Game Over</h3> -->
+        <!-- <h1 id="gameOverScore">0</h1> -->
+        <!-- <p>Score</p> -->
+        <div class="gameOver__buttons">
+          <button class="button" id="startGame">Start</button>
+          <button class="button">Home</button>
+          <button class="button">Exit</button>
+        </div>
+      </div>
+    </div>
+    <div class="gameOver" id="modalRestart">
+      <div class="gameOver__container">
+        <h3>Game Over</h3>
+        <h1 id="gameOverScore">0</h1>
+        <p>Score</p>
+        <div class="gameOver__buttons">
+          <button class="button" id="restartGame">Restart</button>
+          <button class="button">Home</button>
+          <button class="button">Exit</button>
+        </div>
+      </div>
+    </div>
     <canvas id="canvas" width="500" height="500"></canvas>
 
     <script src="background.js"></script>
@@ -15,6 +39,7 @@
     <script src="enemy.js"></script>
     <script src="bullet.js"></script>
     <script src="player.js"></script>
+    <script src="gameOver.js"></script>
     <script src="main.js"></script>
   </body>
 </html>

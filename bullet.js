@@ -65,6 +65,10 @@ class Bullet {
         this.position.x = -200;
         this.position.y = -200;
         enemies[i].velocity.y = 0;
+        setTimeout(() => {
+          enemies[i].position.x = -100;
+          enemies[i].position.y = -100;
+        }, 1000);
         // enemies[i].position.x = -100;
         // enemies[i].position.y = -100;
         gameScore += 10;

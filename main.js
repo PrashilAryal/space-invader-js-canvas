@@ -3,6 +3,7 @@ const c = canvas.getContext("2d");
 
 const player = new Player();
 const meteor = new Meteor();
+const gameOver = new GameOver();
 
 const bg = new Background(0, 0);
 const bg2 = new Background(0, -bg.size.height);
@@ -15,14 +16,35 @@ let bullets = [];
 let enemies = [];
 
 let gameScore = 0;
+const start = document.getElementById("startGame");
+const restart = document.getElementById("restartGame");
+const modalStart = document.getElementById("modalStart");
+const modalRestart = document.getElementById("modalRestart");
+const gameOverScore = document.getElementById("gameOverScore");
+
+modalRestart.style.display = "none";
+function init() {
+  bullets = [];
+  enemies = [];
+  gameScore = 0;
+  gameInterval = setInterval(() => {
+    const enemy = new Enemy();
+    enemies.push(enemy);
+    gameScore++;
+  }, 1000);
+}
+
+let animate;
 
 // const totalEnemies = 1;
 
-const gameInterval = setInterval(() => {
+let gameInterval = setInterval(() => {
   const enemy = new Enemy();
   enemies.push(enemy);
   gameScore++;
 }, 1000);
+
+// playBackgroundMusic();
 
 function gameLoop() {
   c.clearRect(0, 0, canvas.width, canvas.height);
@@ -53,13 +75,19 @@ function gameLoop() {
 
   if (!player.isAlive) {
     clearInterval(gameInterval);
+    backgroundSound.pause();
+    gameOver.update();
+    gameOverScore.innerHTML = gameScore;
+    // modalStart.style.display = "flex";
+    cancelAnimationFrame(animate);
+    modalRestart.style.display = "flex";
   }
-  requestAnimationFrame(gameLoop);
+  animate = requestAnimationFrame(gameLoop);
 }
-gameLoop();
+// gameLoop();
 
 function playBackgroundMusic() {
-  backgroundSound.src = "./sounds/bulletFire.ogg";
+  backgroundSound.src = "./sounds/backgroundMusic.ogg";
   backgroundSound.play();
   backgroundSound.volume = 0.2;
   backgroundSound.loop = true;
@@ -102,4 +130,18 @@ document.addEventListener("keyup", (event) => {
   if (event.code === "ArrowLeft") {
     player.velocity.x = 0;
   }
+});
+
+start.addEventListener("click", () => {
+  console.log("start");
+  // init();
+  gameLoop();
+  modalStart.style.display = "none";
+});
+restart.addEventListener("click", () => {
+  console.log("restart");
+  player.isAlive = true;
+  init();
+  gameLoop();
+  modalRestart.style.display = "none";
 });

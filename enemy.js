@@ -22,7 +22,7 @@ class Enemy {
     c.beginPath();
     c.fillStyle = "red";
     if (this.isHit) {
-      this.img.src = "./images/damageEnemy.png";
+      this.img.src = "./images/damageEnemy1.png";
     }
     c.drawImage(
       this.img,
@@ -39,7 +39,7 @@ class Enemy {
       this.position.y = -100;
       gameScore -= 5;
     }
-    if (gameScore < 5) {
+    if (gameScore < 0) {
       gameScore = 0;
     }
     this.position.y += this.velocity.y;

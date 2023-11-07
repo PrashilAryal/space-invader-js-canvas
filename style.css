@@ -6,3 +6,53 @@ body {
 canvas {
   border: 2px solid white;
 }
+
+.gameOver {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.gameOver__container {
+  background-color: white;
+  max-width: 400px;
+  width: 400px;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.gameOver .gameOver__container h3 {
+  font-weight: 500;
+  font-size: 1.5rem;
+  color: navy;
+}
+
+.gameOver .gameOver__container h1 {
+  font-weight: 800;
+  font-size: 2.5rem;
+  margin-bottom: 0;
+}
+.gameOver .gameOver__container p {
+  font-weight: 50;
+  font-size: 1.1rem;
+  margin-top: 0;
+}
+.gameOver__buttons {
+  display: inline-block;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+.button {
+  background-color: navy;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 0.4rem;
+  font-size: 0.9rem;
+}
