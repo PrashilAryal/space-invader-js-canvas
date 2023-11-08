@@ -8,14 +8,15 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="gameOver" id="modalStart">
-      <div class="gameOver__container">
-        <!-- <h3>Game Over</h3> -->
-        <!-- <h1 id="gameOverScore">0</h1> -->
-        <!-- <p>Score</p> -->
-        <div class="gameOver__buttons">
+    <div class="gameMenu" id="modalStart">
+      <div class="gameMenu__container">
+        <h3>MENU</h3>
+        <!-- <h1 id="gameOverScore">Space</h1> -->
+        <!-- <p>Invader</p> -->
+        <div class="gameMenu__buttons">
           <button class="button" id="startGame">Start</button>
-          <button class="button">Home</button>
+          <button class="button">Option</button>
+          <button class="button">Description</button>
           <button class="button">Exit</button>
         </div>
       </div>
@@ -32,7 +33,10 @@
         </div>
       </div>
     </div>
-    <canvas id="canvas" width="500" height="500"></canvas>
+    <div class="canvas-container">
+      <h1>Space Invader</h1>
+      <canvas id="canvas" width="500" height="500"></canvas>
+    </div>
 
     <script src="background.js"></script>
     <script src="meteor.js"></script>
