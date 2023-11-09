@@ -24,11 +24,20 @@ let enemies = [];
 let gameScore = 0;
 const start = document.getElementById("startGame");
 const restart = document.getElementById("restartGame");
+const menuOption = document.getElementById("menuOption");
+const menuOptionBtn = document.getElementById("menuOptionBtn");
+const homeButton = document.getElementById("homeButton");
 const modalStart = document.getElementById("modalStart");
 const modalRestart = document.getElementById("modalRestart");
+const modalMenuOption = document.getElementById("modalMenuOption");
+
 const gameOverScore = document.getElementById("gameOverScore");
 
 modalRestart.style.display = "none";
+modalMenuOption.style.display = "none";
+modalStart.style.display = "flex";
+let gameInterval;
+
 function init() {
   bullets = [];
   enemies = [];
@@ -45,11 +54,11 @@ let animate;
 
 // const totalEnemies = 1;
 
-let gameInterval = setInterval(() => {
-  const enemy = new Enemy();
-  enemies.push(enemy);
-  gameScore++;
-}, 1000);
+// = setInterval(() => {
+// const enemy = new Enemy();
+// enemies.push(enemy);
+// gameScore++;
+// }, 1000);
 
 // playBackgroundMusic();
 
@@ -263,10 +272,15 @@ start.addEventListener("click", () => {
   // init();
   // gameLoop();
   modalRestart.style.display = "none";
+  modalStart.style.display = "none";
+  modalMenuOption.style.display = "none";
+  player.isAlive = true;
 
   // addEventListeners();
+  init();
+
   gameLoop();
-  modalStart.style.display = "none";
+  // modalStart.style.display = "none";
   // removeEventListeners();
 });
 restart.addEventListener("click", () => {
@@ -309,4 +323,59 @@ restart.addEventListener("click", () => {
 
   // Add event listeners again
   addEventListeners();
+});
+
+menuOption.addEventListener("click", () => {
+  console.log("options");
+  // init();
+  // gameLoop();
+  modalRestart.style.display = "none";
+  // modalStart.style.display = "none";
+  modalMenuOption.style.display = "flex";
+
+  // addEventListeners();
+  // init();
+
+  // gameLoop();
+  // modalStart.style.display = "none";
+  // removeEventListeners();
+});
+menuOptionBtn.addEventListener("click", () => {
+  console.log("option btn");
+  // init();
+  // gameLoop();
+  modalRestart.style.display = "none";
+  modalMenuOption.style.display = "none";
+  modalStart.style.display = "flex";
+
+  // addEventListeners();
+  // init();
+
+  // gameLoop();
+  // modalStart.style.display = "none";
+  // removeEventListeners();
+});
+
+homeButton.addEventListener("click", () => {
+  console.log("home");
+  init();
+  // removeEventListener();
+  player.position.x = canvas.width / 2; // Set the initial X position
+  player.position.y = canvas.height - 50; // Set the initial Y position
+  player.velocity.x = 0;
+  player.velocity.y = 0;
+  player.isAlive = true;
+
+  // Clear bullets and enemies
+  bullets = [];
+  enemies = [];
+
+  // Reset game score
+  gameScore = 0;
+  clearInterval(gameInterval);
+
+  cancelAnimationFrame(animate);
+  modalRestart.style.display = "none";
+  modalMenuOption.style.display = "none";
+  modalStart.style.display = "flex";
 });
