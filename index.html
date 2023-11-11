@@ -21,7 +21,7 @@
         <!-- <p>Invader</p> -->
         <div class="gameMenu__buttons">
           <button class="button" id="startGame">Start</button>
-          <button class="button">Setting</button>
+          <button class="button" id="menuSetting">Setting</button>
           <button class="button" id="menuOption">Controls</button>
           <button class="button">Exit</button>
         </div>
@@ -50,6 +50,47 @@
           <p>Space Key : Fire Bullet</p>
           <p>'M' Key : Play or Pause Music</p>
           <button class="button" id="menuOptionBtn">Got it</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- setting -->
+    <div class="menuSetting" id="modalMenuSetting">
+      <div class="menuSetting__container">
+        <h3>Game Setting</h3>
+        <div class="menuSetting__list">
+          <h1>Sound</h1>
+          <div class="menuSetting__list__item">
+            <p>Background</p>
+            <button
+              id="playBackgroundSoundBtn"
+              class="btnOn"
+              onclick="toggleState('bgBtn')"
+            >
+              On
+            </button>
+          </div>
+          <div class="menuSetting__list__item">
+            <p>Firing</p>
+            <button
+              id="playFiringSoundBtn"
+              class="btnOn"
+              onclick="toggleState('fBtn')"
+            >
+              On
+            </button>
+          </div>
+          <div class="menuSetting__list__item">
+            <p>Collision</p>
+            <button
+              id="playCollisionSoundBtn"
+              class="btnOn"
+              onclick="toggleState('cBtn')"
+            >
+              On
+            </button>
+          </div>
+          <button class="button" id="menuSettingBtn">Done</button>
         </div>
       </div>
     </div>

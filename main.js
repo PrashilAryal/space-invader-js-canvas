@@ -11,7 +11,7 @@ const bg = new Background(0, 0);
 const bg2 = new Background(0, -bg.size.height);
 
 let backgroundSound = new Audio();
-let isMusicPlaying = false;
+// let isMusicPlaying = false;
 backgroundSound.src = "./sounds/backgroundMusic.ogg";
 backgroundSound.volume = 0.2;
 backgroundSound.loop = true;
@@ -25,18 +25,31 @@ let gameScore = 0;
 const start = document.getElementById("startGame");
 const restart = document.getElementById("restartGame");
 const menuOption = document.getElementById("menuOption");
+const menuSetting = document.getElementById("menuSetting");
 const menuOptionBtn = document.getElementById("menuOptionBtn");
+const menuSettingBtn = document.getElementById("menuSettingBtn");
 const homeButton = document.getElementById("homeButton");
 const modalStart = document.getElementById("modalStart");
 const modalRestart = document.getElementById("modalRestart");
 const modalMenuOption = document.getElementById("modalMenuOption");
+const modalMenuSetting = document.getElementById("modalMenuSetting");
+// const playBackgroundSoundBtn = document.getElementById(
+//   "playBackgroundSoundBtn"
+// );
+// const playFiringSoundBtn = document.getElementById("playFiringSoundBtn");
+// const playCollisionSoundBtn = document.getElementById("playCollisionSoundBtn");
 
 const gameOverScore = document.getElementById("gameOverScore");
 
 modalRestart.style.display = "none";
 modalMenuOption.style.display = "none";
+modalMenuSetting.style.display = "none";
 modalStart.style.display = "flex";
 let gameInterval;
+
+let playBackgroundSound = "true";
+let playFiringSound = "true";
+let playCollisionSound = "true";
 
 function init() {
   bullets = [];
@@ -163,12 +176,19 @@ function gameLoop() {
 // gameLoop();
 
 function playBackgroundMusic() {
-  if (!isMusicPlaying) {
+  // if (!isMusicPlaying) {
+  //   backgroundSound.play();
+  //   isMusicPlaying = true;
+  // } else {
+  //   backgroundSound.pause();
+  //   isMusicPlaying = false;
+  // }
+  if (playBackgroundSound) {
     backgroundSound.play();
-    isMusicPlaying = true;
+    // isMusicPlaying = true;
   } else {
     backgroundSound.pause();
-    isMusicPlaying = false;
+    // isMusicPlaying = false;
   }
 }
 
@@ -331,6 +351,7 @@ menuOption.addEventListener("click", () => {
   // gameLoop();
   modalRestart.style.display = "none";
   // modalStart.style.display = "none";
+  modalMenuSetting.style.display = "none";
   modalMenuOption.style.display = "flex";
 
   // addEventListeners();
@@ -340,12 +361,18 @@ menuOption.addEventListener("click", () => {
   // modalStart.style.display = "none";
   // removeEventListeners();
 });
+menuSetting.addEventListener("click", () => {
+  modalRestart.style.display = "none";
+  modalMenuOption.style.display = "none";
+  modalMenuSetting.style.display = "flex";
+});
 menuOptionBtn.addEventListener("click", () => {
   console.log("option btn");
   // init();
   // gameLoop();
   modalRestart.style.display = "none";
   modalMenuOption.style.display = "none";
+  modalMenuSetting.style.display = "none";
   modalStart.style.display = "flex";
 
   // addEventListeners();
@@ -355,6 +382,40 @@ menuOptionBtn.addEventListener("click", () => {
   // modalStart.style.display = "none";
   // removeEventListeners();
 });
+menuSettingBtn.addEventListener("click", () => {
+  console.log("option btn");
+  // init();
+  // gameLoop();
+  modalRestart.style.display = "none";
+  modalMenuOption.style.display = "none";
+  modalMenuSetting.style.display = "none";
+  modalStart.style.display = "flex";
+
+  // addEventListeners();
+  // init();
+
+  // gameLoop();
+  // modalStart.style.display = "none";
+  // removeEventListeners();
+});
+
+// playBackgroundSoundBtn.addEventListener("click", () => {
+//   console.log("play background sound");
+//   // init();
+//   // gameLoop();
+//   // modalRestart.style.display = "none";
+//   // modalMenuOption.style.display = "none";
+//   // modalMenuSetting.style.display = "none";
+//   // modalStart.style.display = "flex";
+//   playBackgroundSound = false;
+//   // playBackgroundSoundBtn.classList.add("btnOff");
+//   // playBackgroundSoundBtn.classList.remove("btnOn");
+
+//   document.getElementById("playBackgroundSoundBtn").classList.add("btnOff");
+
+//   document.getElementById("playBackgroundSoundBtn").classList.remove("btnOn");
+//   document.getElementById("playBackgroundSoundBtn").innerHTML = "Off";
+// });
 
 homeButton.addEventListener("click", () => {
   console.log("home");
@@ -377,5 +438,57 @@ homeButton.addEventListener("click", () => {
   cancelAnimationFrame(animate);
   modalRestart.style.display = "none";
   modalMenuOption.style.display = "none";
+  modalMenuSetting.style.display = "none";
   modalStart.style.display = "flex";
 });
+
+function toggleState(c) {
+  var button = document.getElementById("playBackgroundSoundBtn");
+  var buttonF = document.getElementById("playFiringSoundBtn");
+  var buttonC = document.getElementById("playCollisionSoundBtn");
+
+  if (c === "bgBtn") {
+    c = document.getElementById("playBackgroundSoundBtn");
+    if (c.innerHTML === "On") {
+      c.innerHTML = "Off";
+      c.classList.remove("btnOn");
+      c.classList.add("btnOff");
+      playBackgroundSound = false;
+      backgroundSound.pause();
+    } else {
+      c.innerHTML = "On";
+      c.classList.add("btnOn");
+      c.classList.remove("off");
+      playBackgroundSound = true;
+      backgroundSound.play();
+    }
+  }
+  if (c === "fBtn") {
+    c = document.getElementById("playFiringSoundBtn");
+    if (c.innerHTML === "On") {
+      c.innerHTML = "Off";
+      c.classList.remove("btnOn");
+      c.classList.add("btnOff");
+      playFiringSound = false;
+    } else {
+      c.innerHTML = "On";
+      c.classList.add("btnOn");
+      c.classList.remove("off");
+      playFiringSound = true;
+    }
+  }
+  if (c === "cBtn") {
+    c = document.getElementById("playCollisionSoundBtn");
+    if (c.innerHTML === "On") {
+      c.innerHTML = "Off";
+      c.classList.remove("btnOn");
+      c.classList.add("btnOff");
+      playCollisionSound = false;
+    } else {
+      c.innerHTML = "On";
+      c.classList.add("btnOn");
+      c.classList.remove("off");
+      playCollisionSound = true;
+    }
+  }
+}
