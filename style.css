@@ -1,6 +1,9 @@
 body {
   background-color: black;
 }
+button:focus {
+  outline: none;
+}
 .canvas-container {
   width: 100%;
   height: 100vh;
@@ -12,7 +15,6 @@ body {
   color: white;
   margin-top: 1.1rem;
   position: absolute;
-  /* float: right; */
   font-size: 2rem;
 }
 canvas {
@@ -36,23 +38,8 @@ canvas {
   justify-content: center;
   text-align: center;
   height: 100vh;
-  /* background-color: red; */
 }
 .gameOver__container {
-  /* background-color: white;
-  max-width: 400px;
-  width: 400px;
-  padding: 10px;
-  border-radius: 10px;
-
-  max-width: 400px;
-  width: 400px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: blue;
-  color: white;
-  height: 50%; */
-
   max-width: 400px;
   width: 380px;
   padding: 10px;
@@ -68,7 +55,6 @@ canvas {
   font-weight: 500;
   font-size: 1.5rem;
   color: gainsboro;
-  /* padding: 5px; */
   width: 100%;
   border-bottom: 2px solid rgba(68, 143, 180, 0.4);
   margin-bottom: 0;
@@ -85,17 +71,6 @@ canvas {
   margin-top: 0;
 }
 .gameOver__buttons {
-  /* display: grid;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  background-color: navy;
-  border-radius: 10px;
-  height: 50%;
-  width: 70%;
-  margin: auto;
-  margin-top: 5%; */
-
   display: grid;
   justify-content: center;
   text-align: center;
@@ -108,20 +83,6 @@ canvas {
   margin-top: 10%;
 }
 .gameOver__buttons button {
-  /* display: block;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  margin: auto;
-  width: 150px;
-  border-radius: 5px;
-  border: none;
-  padding: 5px;
-  background-color: blue;
-  color: white;
-  font-size: 18px;
-  font-weight: 800; */
-
   display: block;
   justify-content: center;
   text-align: center;
@@ -132,14 +93,11 @@ canvas {
   border: none;
   padding: 5px;
   background-color: #448fb4;
-  /* background-color: rgba(68, 143, 180, 1); */
   color: white;
   font-size: 18px;
   font-weight: 800;
 }
 .gameOver__buttons button:hover {
-  /* cursor: pointer;
-  background-color: blueviolet; */
   cursor: pointer;
   background-color: #363636;
   background-color: rgba(68, 143, 180, 0.5);
@@ -156,7 +114,6 @@ canvas {
   justify-content: center;
   text-align: center;
   height: 100vh;
-  /* background-color: red; */
 }
 .gameMenu__container {
   max-width: 400px;
@@ -208,7 +165,6 @@ canvas {
   border: none;
   padding: 5px;
   background-color: #448fb4;
-  /* background-color: rgba(68, 143, 180, 1); */
   color: white;
   font-size: 18px;
   font-weight: 800;
@@ -219,7 +175,7 @@ canvas {
   background-color: rgba(68, 143, 180, 0.5);
 }
 
-/* menu desc */
+/* Menu - Game Controls Description */
 .menuDescription {
   position: fixed;
   top: 0;
@@ -230,7 +186,6 @@ canvas {
   align-items: center;
   justify-content: center;
   text-align: center;
-  /* background-color: red; */
 }
 .menuDescription__container {
   max-width: 400px;
@@ -248,8 +203,6 @@ canvas {
   font-weight: 500;
   font-size: 1.5rem;
   color: gainsboro;
-  /* padding: 10px; */
-  /* border-bottom: 2px solid #448fb4; */
 
   font-weight: 500;
   font-size: 1.5rem;
@@ -258,7 +211,6 @@ canvas {
   font-size: 1.5rem;
   color: gainsboro;
   padding: 5px;
-  /* width: 100%; */
   border-bottom: 2px solid rgba(68, 143, 180, 0.2);
   margin-bottom: 0;
 }
@@ -274,33 +226,23 @@ canvas {
   margin-top: 0;
 }
 .menuDescription__list {
-  /* display: flex; */
-  /* justify-content: center; */
-  /* text-align: left; */
-  /* align-items: center; */
   background-color: #4f4f4f;
   border-radius: 5px;
-  /* height: 70%; */
   width: 90%;
   margin: auto;
   margin-top: 10%;
   padding: 30px;
 }
 .menuDescription__list ul {
-  /* display: block; */
-  /* margin-left: -20px; */
   list-style: none;
 }
 .menuDescription__list button {
   display: block;
-  /* justify-content: center; */
-  /* text-align: center; */
-  /* align-items: center; */
+
   margin: auto;
   width: 100%;
   border-radius: 5px;
   border: none;
-  /* padding: 5px; */
   background-color: #448fb4;
   color: white;
   font-size: 18px;
@@ -364,9 +306,6 @@ canvas {
   margin: auto;
   margin-top: 1%;
   padding: 30px;
-  /* text-align: center; */
-  /* align-items: center; */
-  /* align-self: center; */
 }
 .menuSetting__list .menuSetting__list__item {
   display: flex;
@@ -377,22 +316,9 @@ canvas {
   font-weight: 500;
 }
 
-/* .menuSetting__list div button {
-  display: block;
-  width: 50px;
-  border-radius: 5px;
-  border: none;
-  background-color: #448fb4;
-  color: white;
-  font-size: 18px;
-  font-weight: 600;
-  height: 30px;
-} */
 .menuSetting__list .menuSetting__list__item button:hover {
   cursor: pointer;
   opacity: 0.5;
-  /* background-color: blueviolet; */
-  /* background-color: rgba(225, 225, 225, 0.9); */
 }
 .menuSetting__list .button {
   display: flex;
@@ -417,34 +343,21 @@ canvas {
   width: 50px;
   border-radius: 5px;
   border: none;
-  background-color: red;
+  background-color: #2c5e77;
   color: white;
   font-size: 18px;
   font-weight: 600;
   height: 30px;
+  color: gainsboro;
 }
 .btnOn {
   display: block;
   width: 50px;
   border-radius: 5px;
   border: none;
-  background-color: green;
+  background-color: #448fb4;
   color: white;
   font-size: 18px;
   font-weight: 600;
   height: 30px;
 }
-
-/* #playBackgroundSoundBtn {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.off {
-  background-color: #f44336;
-} */

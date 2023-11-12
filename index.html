@@ -13,7 +13,9 @@
 
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
+    <!-- Game Menu -->
     <div class="gameMenu" id="modalStart">
       <div class="gameMenu__container">
         <h3>MENU</h3>
@@ -28,6 +30,7 @@
       </div>
     </div>
 
+    <!-- Game Over -->
     <div class="gameOver" id="modalRestart">
       <div class="gameOver__container">
         <h3>Game Over</h3>
@@ -41,7 +44,7 @@
       </div>
     </div>
 
-    <!-- options -->
+    <!-- Game Controls -->
     <div class="menuDescription" id="modalMenuOption">
       <div class="menuDescription__container">
         <h3>Game Control</h3>
@@ -54,7 +57,7 @@
       </div>
     </div>
 
-    <!-- setting -->
+    <!-- Game Setting -->
     <div class="menuSetting" id="modalMenuSetting">
       <div class="menuSetting__container">
         <h3>Game Setting</h3>
@@ -95,6 +98,7 @@
       </div>
     </div>
 
+    <!-- Canvas - Game Screen -->
     <div class="canvas-container">
       <h1>Space Invader</h1>
       <canvas id="canvas" width="500" height="700"></canvas>
@@ -105,7 +109,6 @@
     <script src="enemy.js"></script>
     <script src="bullet.js"></script>
     <script src="player.js"></script>
-    <script src="gameOver.js"></script>
     <script src="main.js"></script>
   </body>
 </html>

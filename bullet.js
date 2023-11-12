@@ -40,13 +40,7 @@ class Bullet {
     console.log(this.position.y);
   }
 
-  // enemyCollision(){
-  //   if(this.position.y <= enemy.position.y + enemy.size.height){
-
-  //   }
-
-  // }
-
+  // When bullet hit an enemy
   enemyCollision() {
     for (let i = 0; i < enemies.length; i++) {
       if (
@@ -55,9 +49,7 @@ class Bullet {
         this.position.y + this.size.height >= enemies[i].position.y &&
         this.position.y <= enemies[i].position.y + enemies[i].size.height
       ) {
-        console.log("collision");
         playEnemyHitSound();
-        // bird.isDead = true;
 
         this.hasHit = true;
         enemies[i].isHit = true;
@@ -69,16 +61,8 @@ class Bullet {
           enemies[i].position.x = -100;
           enemies[i].position.y = -100;
         }, 1000);
-        // enemies[i].position.x = -100;
-        // enemies[i].position.y = -100;
         gameScore += 10;
-        console.log("bullet collision");
       }
-      // if (enemies[i].position.y >= canvas.height) {
-      //   enemies[i].velocity.y = 0;
-      //   enemies[i].position.x = -100;
-      //   enemies[i].position.y = -100;
-      // }
     }
   }
 
@@ -96,8 +80,8 @@ class Bullet {
 const bulletSound = new Audio();
 
 function playBulletFire() {
-  bulletSound.src = "./sounds/bulletFire.ogg";
+  bulletSound.src = "./sounds/bulletFire.mp3";
   bulletSound.play();
-  bulletSound.volume = 0.2;
+  bulletSound.volume = 0.3;
   bulletSound.loop = false;
 }

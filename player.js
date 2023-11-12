@@ -5,8 +5,6 @@ class Player {
       height: 50,
     };
     this.position = {
-      // x: canvas.width / 2 - this.size.width / 2,
-      // y: canvas.height - this.size.height,
       x: canvas.width / 2,
       y: canvas.height,
     };
@@ -43,7 +41,6 @@ class Player {
     if (this.position.y <= 0) this.position.y = 0;
     if (this.position.y + this.size.height >= canvas.height)
       this.position.y = canvas.height - this.size.height;
-    // console.log(this.position.x);
   }
 
   update() {

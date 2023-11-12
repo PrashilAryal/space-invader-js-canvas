@@ -6,7 +6,6 @@ class Enemy {
     };
     this.position = {
       x: Math.random() * (canvas.width - this.size.width - 0) + 0,
-      // y: Math.random() * (50 - 0) + 0,
       y: -this.size.height,
     };
     this.velocity = {
@@ -22,7 +21,11 @@ class Enemy {
     c.beginPath();
     c.fillStyle = "red";
     if (this.isHit) {
-      this.img.src = "./images/damageEnemy1.png";
+      this.size = {
+        width: 50,
+        height: 50,
+      };
+      this.img.src = "./images/damageEnemy.png";
     }
     c.drawImage(
       this.img,
@@ -45,30 +48,7 @@ class Enemy {
     this.position.y += this.velocity.y;
   }
 
-  // bulletCollision(bullets) {
-
-  //   for (let i = 0; i < bullets.length; i++) {
-  //     if (
-  //       this.position.x + this.size.width >= bullets[i].position.x &&
-  //       this.position.x <= bullets[i].position.x + bullets[i].size.width &&
-  //       this.position.y + this.size.height >= bullets[i].position.y &&
-  //       this.position.y <= bullets[i].position.y + bullets[i].size.height
-  //     ) {
-  //       bullets[i].hasHit = true;
-  //       this.isHit = true;
-  //       this.velocity.y = 0;
-  //       this.position.x = -100;
-  //       this.position.y = -100;
-  //       console.log("bullet collision");
-  //       if (bullets[i].position.y <= 0) {
-  //         bullets[i].velocity.y = 0;
-  //         bullets[i].position.x = -200;
-  //         bullets[i].position.y = -200;
-  //       }
-  //     }
-  //   }
-  // }
-
+  // When enemy collide with the player
   playerCollision(player) {
     if (
       this.position.x + this.size.width >= player.position.x &&
@@ -76,22 +56,16 @@ class Enemy {
       this.position.y + this.size.height >= player.position.y &&
       this.position.y <= player.position.y + player.size.height
     ) {
-      console.log("player collision");
       player.isAlive = false;
       this.velocity.y = 0;
-      // this.position.x = -100;
-      // this.position.y = -100;
     }
   }
 
   update(player) {
     this.draw();
     if (player.isAlive) {
-      // if (!this.isHit) {
-      // this.bulletCollision(bullets);
       this.playerCollision(player);
       this.move();
-      // }
     }
   }
 }
@@ -99,8 +73,10 @@ class Enemy {
 const enemyHitSound = new Audio();
 
 function playEnemyHitSound() {
-  enemyHitSound.src = "./sounds/enemyHit.mp3";
-  enemyHitSound.play();
-  enemyHitSound.volume = 0.1;
-  enemyHitSound.loop = false;
+  if (playCollisionSound) {
+    enemyHitSound.src = "./sounds/enemyHit.mp3";
+    enemyHitSound.volume = 0.3;
+    enemyHitSound.loop = false;
+    enemyHitSound.play();
+  }
 }

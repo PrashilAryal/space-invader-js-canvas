@@ -3,25 +3,24 @@ const c = canvas.getContext("2d");
 
 c.textBaseLine = "middle";
 
+// Class's object
 const player = new Player();
 const meteor = new Meteor();
-const gameOver = new GameOver();
 
+// Two background images for background movement
 const bg = new Background(0, 0);
 const bg2 = new Background(0, -bg.size.height);
 
 let backgroundSound = new Audio();
-// let isMusicPlaying = false;
 backgroundSound.src = "./sounds/backgroundMusic.ogg";
 backgroundSound.volume = 0.2;
 backgroundSound.loop = true;
 
 let allBg = [];
-
 let bullets = [];
 let enemies = [];
-
 let gameScore = 0;
+
 const start = document.getElementById("startGame");
 const restart = document.getElementById("restartGame");
 const menuOption = document.getElementById("menuOption");
@@ -33,24 +32,25 @@ const modalStart = document.getElementById("modalStart");
 const modalRestart = document.getElementById("modalRestart");
 const modalMenuOption = document.getElementById("modalMenuOption");
 const modalMenuSetting = document.getElementById("modalMenuSetting");
-// const playBackgroundSoundBtn = document.getElementById(
-//   "playBackgroundSoundBtn"
-// );
-// const playFiringSoundBtn = document.getElementById("playFiringSoundBtn");
-// const playCollisionSoundBtn = document.getElementById("playCollisionSoundBtn");
-
 const gameOverScore = document.getElementById("gameOverScore");
 
+// Display only Menu on game start
 modalRestart.style.display = "none";
 modalMenuOption.style.display = "none";
 modalMenuSetting.style.display = "none";
 modalStart.style.display = "flex";
+
 let gameInterval;
+// Variable to determine sound
+let playBackgroundSound = true;
+let playFiringSound = true;
+let playCollisionSound = true;
+// Variables to determine sound on restart
+let playBackgroundSoundState = true;
+let playFiringSoundState = true;
+let playCollisionSoundState = true;
 
-let playBackgroundSound = "true";
-let playFiringSound = "true";
-let playCollisionSound = "true";
-
+// Initialization of game data - for restart option
 function init() {
   bullets = [];
   enemies = [];
@@ -61,20 +61,16 @@ function init() {
     gameScore++;
   }, 1000);
   modalRestart.style.display = "none";
+  playBackgroundSound = playBackgroundSoundState;
+  playFiringSound = playFiringSoundState;
+  playCollisionSound = playCollisionSoundState;
+  playBackgroundMusic();
 }
 
+// Game loop variable
 let animate;
 
-// const totalEnemies = 1;
-
-// = setInterval(() => {
-// const enemy = new Enemy();
-// enemies.push(enemy);
-// gameScore++;
-// }, 1000);
-
-// playBackgroundMusic();
-
+// Variables for tracking keyboard key press
 let keys = {};
 let spaceKeyPressed = false;
 
@@ -105,10 +101,11 @@ function handlePlayerActions() {
 
   if (keys["Space"] && !spaceKeyPressed) {
     spaceKeyPressed = true;
+    if (playFiringSound) {
+      playBulletFire();
+    }
     bullets.push(new Bullet(player.position.x, player.position.y));
-    playBulletFire();
-    // To prevent continuous firing, consider adding a brief delay or limit
-    // the number of bullets fired in a given time frame.
+    // To prevent continuous firing
     setTimeout(() => {
       spaceKeyPressed = false;
     }, 500);
@@ -118,323 +115,113 @@ function handlePlayerActions() {
 document.addEventListener("keydown", handleKeyDown);
 document.addEventListener("keyup", handleKeyUp);
 
-// document.addEventListener("keydown", (event) => {
-//   handleKeyDown(event);
-
-//   if (event.code === "Space") {
-//     spaceKeyPressed = true;
-//   }
-// });
-
-// document.addEventListener("keyup", (event) => {
-//   handleKeyUp(event);
-
-//   if (event.code === "Space") {
-//     spaceKeyPressed = false;
-//   }
-// });
-
 function gameLoop() {
   c.clearRect(0, 0, canvas.width, canvas.height);
 
-  // game logic
+  // Game Logic
   handlePlayerActions();
   bg.update();
   bg2.update();
   meteor.update();
   player.update();
   for (let i = 0; i < enemies.length; i++) {
-    // enemies[i].update(player.position.x, player.position.y);
     enemies[i].update(player);
-    // if (!enemies[i].isHit) {
-    // enemies[i].playerCollision(player);
-    // enemies[i].bulletCollision(bullets);
-    // }
   }
   for (let i = 0; i < bullets.length; i++) {
     bullets[i].update();
   }
-  console.log("is Alive: ", player.isAlive);
 
-  // c.clearRect(0, 0, 50, 60);
+  // Display game score
   c.beginPath();
   c.fillStyle = "white";
   c.font = "30px sans serif";
   c.fillText(gameScore, 15, 30);
 
+  // Game over if player is not alive
   if (!player.isAlive) {
     clearInterval(gameInterval);
     backgroundSound.pause();
-    gameOver.update();
     gameOverScore.innerHTML = gameScore;
-    // modalStart.style.display = "flex";
     cancelAnimationFrame(animate);
     modalRestart.style.display = "flex";
   }
   animate = window.requestAnimationFrame(gameLoop);
 }
-// gameLoop();
 
 function playBackgroundMusic() {
-  // if (!isMusicPlaying) {
-  //   backgroundSound.play();
-  //   isMusicPlaying = true;
-  // } else {
-  //   backgroundSound.pause();
-  //   isMusicPlaying = false;
-  // }
   if (playBackgroundSound) {
     backgroundSound.play();
-    // isMusicPlaying = true;
   } else {
     backgroundSound.pause();
-    // isMusicPlaying = false;
   }
 }
 
-// document.addEventListener("keydown", (event) => {
-//   if (event.code === "Space") {
-//     // console.log("Space");
-//     bullets.push(new Bullet(player.position.x, player.position.y));
-//     playBulletFire();
-//   }
-//   if (event.code === "ArrowUp") {
-//     player.velocity.y = -5;
-//   }
-//   if (event.code === "ArrowDown") {
-//     player.velocity.y = 5;
-//   }
-//   if (event.code === "ArrowRight") {
-//     player.velocity.x = 5;
-//   }
-//   if (event.code === "ArrowLeft") {
-//     player.velocity.x = -5;
-//   }
-//   if (event.code === "KeyM") playBackgroundMusic();
-// });
-
-// document.addEventListener("keyup", (event) => {
-//   if (event.code === "Space") {
-//     console.log("Space");
-//   }
-//   if (event.code === "ArrowUp") {
-//     player.velocity.y = 0;
-//   }
-//   if (event.code === "ArrowDown") {
-//     player.velocity.y = 0;
-//   }
-//   if (event.code === "ArrowRight") {
-//     player.velocity.x = 0;
-//   }
-//   if (event.code === "ArrowLeft") {
-//     player.velocity.x = 0;
-//   }
-// });
-
-// function addEventListeners() {
-//   document.addEventListener("keydown", handleKeyDown);
-//   document.addEventListener("keyup", handleKeyUp);
-// }
-// function removeEventListeners() {
-//   document.removeEventListener("keydown", handleKeyDown);
-//   document.removeEventListener("keyup", handleKeyUp);
-// }
-
-// function handleKeyDown(event) {
-//   // document.addEventListener("keydown", (event) => {
-//   if (event.code === "Space") {
-//     // console.log("Space");
-//     bullets.push(new Bullet(player.position.x, player.position.y));
-//     playBulletFire();
-//   }
-//   if (event.code === "ArrowUp") {
-//     player.velocity.y = -5;
-//   }
-//   if (event.code === "ArrowDown") {
-//     player.velocity.y = 5;
-//   }
-//   if (event.code === "ArrowRight") {
-//     player.velocity.x = 5;
-//   }
-//   if (event.code === "ArrowLeft") {
-//     player.velocity.x = -5;
-//   }
-//   if (event.code === "KeyM") playBackgroundMusic();
-//   // });
-// }
-
-// function handleKeyUp(event) {
-//   if (event.code === "Space") {
-//     console.log("Space");
-//   }
-//   if (event.code === "ArrowUp") {
-//     player.velocity.y = 0;
-//   }
-//   if (event.code === "ArrowDown") {
-//     player.velocity.y = 0;
-//   }
-//   if (event.code === "ArrowRight") {
-//     player.velocity.x = 0;
-//   }
-//   if (event.code === "ArrowLeft") {
-//     player.velocity.x = 0;
-//   }
-// }
-
-document.addEventListener("keydown", (event) => {
-  if (event.code === "KeyM") {
-    playBackgroundMusic();
-  }
-});
-
+// Menu Items
 start.addEventListener("click", () => {
-  console.log("start");
-  // init();
-  // gameLoop();
   modalRestart.style.display = "none";
   modalStart.style.display = "none";
   modalMenuOption.style.display = "none";
   player.isAlive = true;
-
-  // addEventListeners();
   init();
-
   gameLoop();
-  // modalStart.style.display = "none";
-  // removeEventListeners();
-});
-restart.addEventListener("click", () => {
-  // console.log("restart");
-  // player.isAlive = true;
-  // init();
-  // // addEventListeners();
-  // gameLoop();
-  // modalRestart.style.display = "none";
-  // // removeEventListeners();
-
-  // Reset player position and state
-  player.position.x = canvas.width / 2; // Set the initial X position
-  player.position.y = canvas.height - 50; // Set the initial Y position
-  player.velocity.x = 0;
-  player.velocity.y = 0;
-  player.isAlive = true;
-
-  // Clear bullets and enemies
-  bullets = [];
-  enemies = [];
-
-  // Reset game score
-  gameScore = 0;
-
-  // Stop game interval if it's used for enemy creation
-  clearInterval(gameInterval);
-
-  // Clear any running animations
-  cancelAnimationFrame(animate);
-
-  // Initialize the game again
-  init();
-
-  // Restart the game loop
-  gameLoop();
-
-  // Hide the restart modal
-  modalRestart.style.display = "none";
-
-  // Add event listeners again
-  addEventListeners();
 });
 
 menuOption.addEventListener("click", () => {
-  console.log("options");
-  // init();
-  // gameLoop();
   modalRestart.style.display = "none";
-  // modalStart.style.display = "none";
   modalMenuSetting.style.display = "none";
   modalMenuOption.style.display = "flex";
-
-  // addEventListeners();
-  // init();
-
-  // gameLoop();
-  // modalStart.style.display = "none";
-  // removeEventListeners();
 });
+
 menuSetting.addEventListener("click", () => {
   modalRestart.style.display = "none";
   modalMenuOption.style.display = "none";
   modalMenuSetting.style.display = "flex";
 });
+
+restart.addEventListener("click", () => {
+  // Resetting player position and other state
+  player.position.x = canvas.width / 2;
+  player.position.y = canvas.height - 50;
+  player.velocity.x = 0;
+  player.velocity.y = 0;
+  player.isAlive = true;
+  bullets = [];
+  enemies = [];
+  gameScore = 0;
+  clearInterval(gameInterval);
+  cancelAnimationFrame(animate);
+  init();
+  gameLoop();
+  modalRestart.style.display = "none";
+  // addEventListeners();
+});
+
+// Buttons inside Menu Items
 menuOptionBtn.addEventListener("click", () => {
-  console.log("option btn");
-  // init();
-  // gameLoop();
   modalRestart.style.display = "none";
   modalMenuOption.style.display = "none";
   modalMenuSetting.style.display = "none";
   modalStart.style.display = "flex";
-
-  // addEventListeners();
-  // init();
-
-  // gameLoop();
-  // modalStart.style.display = "none";
-  // removeEventListeners();
 });
 menuSettingBtn.addEventListener("click", () => {
-  console.log("option btn");
-  // init();
-  // gameLoop();
   modalRestart.style.display = "none";
   modalMenuOption.style.display = "none";
   modalMenuSetting.style.display = "none";
   modalStart.style.display = "flex";
-
-  // addEventListeners();
-  // init();
-
-  // gameLoop();
-  // modalStart.style.display = "none";
-  // removeEventListeners();
 });
-
-// playBackgroundSoundBtn.addEventListener("click", () => {
-//   console.log("play background sound");
-//   // init();
-//   // gameLoop();
-//   // modalRestart.style.display = "none";
-//   // modalMenuOption.style.display = "none";
-//   // modalMenuSetting.style.display = "none";
-//   // modalStart.style.display = "flex";
-//   playBackgroundSound = false;
-//   // playBackgroundSoundBtn.classList.add("btnOff");
-//   // playBackgroundSoundBtn.classList.remove("btnOn");
-
-//   document.getElementById("playBackgroundSoundBtn").classList.add("btnOff");
-
-//   document.getElementById("playBackgroundSoundBtn").classList.remove("btnOn");
-//   document.getElementById("playBackgroundSoundBtn").innerHTML = "Off";
-// });
 
 homeButton.addEventListener("click", () => {
   console.log("home");
   init();
-  // removeEventListener();
-  player.position.x = canvas.width / 2; // Set the initial X position
-  player.position.y = canvas.height - 50; // Set the initial Y position
+  player.position.x = canvas.width / 2;
+  player.position.y = canvas.height - 50;
   player.velocity.x = 0;
   player.velocity.y = 0;
   player.isAlive = true;
-
-  // Clear bullets and enemies
   bullets = [];
   enemies = [];
-
-  // Reset game score
   gameScore = 0;
   clearInterval(gameInterval);
-
   cancelAnimationFrame(animate);
   modalRestart.style.display = "none";
   modalMenuOption.style.display = "none";
@@ -442,53 +229,60 @@ homeButton.addEventListener("click", () => {
   modalStart.style.display = "flex";
 });
 
+// Menu setting button's on/off switch control
 function toggleState(c) {
-  var button = document.getElementById("playBackgroundSoundBtn");
-  var buttonF = document.getElementById("playFiringSoundBtn");
-  var buttonC = document.getElementById("playCollisionSoundBtn");
+  var buttonBackgroundSound = document.getElementById("playBackgroundSoundBtn");
+  var buttonFiringSound = document.getElementById("playFiringSoundBtn");
+  var buttonCollisionSound = document.getElementById("playCollisionSoundBtn");
 
   if (c === "bgBtn") {
-    c = document.getElementById("playBackgroundSoundBtn");
-    if (c.innerHTML === "On") {
-      c.innerHTML = "Off";
-      c.classList.remove("btnOn");
-      c.classList.add("btnOff");
-      playBackgroundSound = false;
-      backgroundSound.pause();
-    } else {
-      c.innerHTML = "On";
-      c.classList.add("btnOn");
-      c.classList.remove("off");
+    buttonBackgroundSound = document.getElementById("playBackgroundSoundBtn");
+    if (buttonBackgroundSound.innerHTML === "Off") {
+      buttonBackgroundSound.innerHTML = "On";
+      buttonBackgroundSound.classList.add("btnOn");
+      buttonBackgroundSound.classList.remove("btnOff");
       playBackgroundSound = true;
       backgroundSound.play();
+      playBackgroundSoundState = playBackgroundSound;
+    } else {
+      buttonBackgroundSound.innerHTML = "Off";
+      buttonBackgroundSound.classList.remove("btnOn");
+      buttonBackgroundSound.classList.add("btnOff");
+      playBackgroundSound = false;
+      backgroundSound.pause();
+      playBackgroundSoundState = playBackgroundSound;
     }
   }
   if (c === "fBtn") {
-    c = document.getElementById("playFiringSoundBtn");
-    if (c.innerHTML === "On") {
-      c.innerHTML = "Off";
-      c.classList.remove("btnOn");
-      c.classList.add("btnOff");
-      playFiringSound = false;
-    } else {
-      c.innerHTML = "On";
-      c.classList.add("btnOn");
-      c.classList.remove("off");
+    buttonFiringSound = document.getElementById("playFiringSoundBtn");
+    if (buttonFiringSound.innerHTML === "Off") {
+      buttonFiringSound.innerHTML = "On";
+      buttonFiringSound.classList.add("btnOn");
+      buttonFiringSound.classList.remove("btnOff");
       playFiringSound = true;
+      playFiringSoundState = playFiringSound;
+    } else {
+      buttonFiringSound.innerHTML = "Off";
+      buttonFiringSound.classList.remove("btnOn");
+      buttonFiringSound.classList.add("btnOff");
+      playFiringSound = false;
+      playFiringSoundState = playFiringSound;
     }
   }
   if (c === "cBtn") {
-    c = document.getElementById("playCollisionSoundBtn");
-    if (c.innerHTML === "On") {
-      c.innerHTML = "Off";
-      c.classList.remove("btnOn");
-      c.classList.add("btnOff");
-      playCollisionSound = false;
-    } else {
-      c.innerHTML = "On";
-      c.classList.add("btnOn");
-      c.classList.remove("off");
+    buttonCollisionSound = document.getElementById("playCollisionSoundBtn");
+    if (buttonCollisionSound.innerHTML === "Off") {
+      buttonCollisionSound.innerHTML = "On";
+      buttonCollisionSound.classList.add("btnOn");
+      buttonCollisionSound.classList.remove("btnOff");
       playCollisionSound = true;
+      playCollisionSoundState = playCollisionSound;
+    } else {
+      buttonCollisionSound.innerHTML = "Off";
+      buttonCollisionSound.classList.remove("btnOn");
+      buttonCollisionSound.classList.add("btnOff");
+      playCollisionSound = false;
+      playCollisionSoundState = playCollisionSound;
     }
   }
 }
